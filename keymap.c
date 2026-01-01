@@ -75,3 +75,34 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 )
 
 };
+
+
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    uint8_t layer = get_highest_layer(layer_state|default_layer_state);
+
+    for (uint8_t i = led_min; i < led_max; i++) {
+        switch(layer) {
+            case NAV:
+                rgb_matrix_set_color(i, RGB_YELLOW);
+                break;
+            case MOUSE:
+                rgb_matrix_set_color(i, RGB_BLUE);
+                break;
+            case NUM:
+                rgb_matrix_set_color(i, RGB_RED);
+                break;
+            case SYM:
+                rgb_matrix_set_color(i, RGB_PURPLE);
+                break;
+            case FUN_MEDIA:
+                rgb_matrix_set_color(i, RGB_GREEN);
+                break;
+            case BASE:
+            default:
+                // Returning true allows the default effect (from JSON/EEPROM) to run
+                return true;
+        }
+    }
+    return false;
+}
+
